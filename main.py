@@ -24,7 +24,7 @@ def search_device():
 def select_device(devices):
     if len(devices) == 0:
         return None
-    devices = [d for d in devices if "-" not in d.name]
+    devices = filter_devices(devices)
     action = questionary.select(
         "Select a Device",
         choices=[f"{d.name} ({d.address})" for d in devices]
@@ -33,6 +33,10 @@ def select_device(devices):
     device_address = action.split(" ")[-1][1:-1]
     device_idx = [d.address for d in devices].index(device_address)
     return devices[device_idx]
+
+def filter_devices(devices):
+    devices = [d for d in devices if d.name]
+    return [d for d in devices if "-" not in d.name]
 
 def callback(sender: int, data: bytearray):
     if data:
