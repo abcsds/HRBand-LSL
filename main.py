@@ -12,6 +12,10 @@ async def search_for_devices():
 def select_device():
     devices = asyncio.run(search_for_devices())
     devices = [d for d in devices if "-" not in d.name]
+    if len(devices) == 0:
+        print("No devices found")
+        asyncio.sleep(5)
+        exit()
     action = questionary.select(
         "Select a Device",
         choices=[f"{d.name} ({d.address})" for d in devices]
