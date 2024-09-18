@@ -9,13 +9,22 @@ async def search_for_devices():
     devices = await scanner.discover(timeout=10.0)
     return devices
 
-def select_device():
+def search_device():
     devices = asyncio.run(search_for_devices())
-    devices = [d for d in devices if "-" not in d.name]
     if len(devices) == 0:
-        print("No devices found")
-        asyncio.sleep(5)
-        exit()
+        action = questionary.confirm("No devices found. Try again?").ask()
+        while action:
+            devices = asyncio.run(search_for_devices())
+            if len(devices) > 0:
+                break
+            action = questionary.confirm("No devices found. Try again?").ask()
+    device = select_device(devices)
+    return device
+
+def select_device(devices):
+    if len(devices) == 0:
+        return None
+    devices = [d for d in devices if "-" not in d.name]
     action = questionary.select(
         "Select a Device",
         choices=[f"{d.name} ({d.address})" for d in devices]
@@ -106,7 +115,7 @@ async def main(address):
 
 if __name__ == "__main__":
     print("Starting BLE device discovery...")
-    device = select_device()
+    device = search_device()
     print(f"Setting up streams for device: {device.name} ({device.address})")
     outlet_hr, outlet_rr = setup_lsl(device.name)
     print(f"Connecting to device: {device.name} ({device.address}) ...")
