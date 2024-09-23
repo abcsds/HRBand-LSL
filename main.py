@@ -53,12 +53,12 @@ class BLEDeviceManager:
                              type='Markers',
                              channel_count=1,
                              channel_format='int32',
-                             source_id='HR_markers')
+                             source_id='HR_markers_' + self.device.name)
         info_rr = StreamInfo(name='RR ' + self.device.name,
                              type='Markers',
                              channel_count=1,
                              channel_format='int32',
-                             source_id='RR_markers')
+                             source_id='RR_markers_' + self.device.name)
         self.outlet_hr = StreamOutlet(info_hr)
         self.outlet_rr = StreamOutlet(info_rr)
 
