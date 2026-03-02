@@ -52,7 +52,7 @@ impl LslOutlet {
                 type_c.as_ptr(),
                 1,     // channel_count
                 0.0,   // irregular rate
-                2,     // cft_int32
+                4,     // cft_int32 (not 2, which is cft_double64!)
                 source_c.as_ptr(),
             );
 
