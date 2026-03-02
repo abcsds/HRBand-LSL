@@ -1,6 +1,8 @@
 pub mod ble;
 pub mod heart_rate;
 pub mod hooks;
+#[cfg(feature = "lsl")]
+pub mod lsl_ffi;
 pub mod lsl_stream;
 
 use anyhow::{Context, Result};

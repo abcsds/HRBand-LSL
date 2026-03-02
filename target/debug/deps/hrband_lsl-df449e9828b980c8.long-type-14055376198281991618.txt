@@ -1,1 +1,0 @@
-Pin<Box<dyn std::future::Future<Output = Result<Vec<btleplug::platform::Peripheral>, btleplug::Error>> + Send>>
