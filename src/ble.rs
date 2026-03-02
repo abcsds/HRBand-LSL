@@ -8,8 +8,7 @@ use uuid::Uuid;
 pub const HR_SERVICE_UUID: Uuid = Uuid::from_u128(0x0000180d_0000_1000_8000_00805f9b34fb);
 
 // Heart Rate Measurement Characteristic UUID
-pub const HR_MEASUREMENT_UUID: Uuid =
-    Uuid::from_u128(0x00002a37_0000_1000_8000_00805f9b34fb);
+pub const HR_MEASUREMENT_UUID: Uuid = Uuid::from_u128(0x00002a37_0000_1000_8000_00805f9b34fb);
 
 /// BLE Device Manager for scanning and filtering BLE devices
 pub struct BleDeviceManager {
