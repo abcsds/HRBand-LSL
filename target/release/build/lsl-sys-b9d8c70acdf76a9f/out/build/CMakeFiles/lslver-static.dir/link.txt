@@ -1,0 +1,1 @@
+/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/lslver-static.dir/link.d "CMakeFiles/lslver-static.dir/testing/lslver.c.o" -o lslver-static  liblsl-static.a

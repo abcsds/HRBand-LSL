@@ -47,16 +47,19 @@ impl Application {
             .context("Failed to create BLE device manager")?;
 
         // Scan for devices
+        println!("Scanning for BLE devices (5 seconds)...");
         let devices = ble_manager
             .scan_devices(Duration::from_secs(5))
             .await
             .context("Failed to scan BLE devices")?;
+        println!("Found {} raw devices", devices.len());
 
         // Filter devices
         let filtered_devices = ble_manager
             .filter_devices(devices)
             .await
             .context("Failed to filter devices")?;
+        println!("After filtering: {} devices", filtered_devices.len());
 
         // Post-scan hook
         let mut scan_context = HookContext::default();
@@ -132,20 +135,26 @@ impl Application {
                 return Ok(None);
             }
 
-            match Select::new("Select device:", device_options).prompt() {
-                Ok(selected_name) => {
-                    for device in devices.iter() {
-                        if let Ok(Some(props)) = device.properties().await {
-                            if let Some(name) = &props.local_name {
-                                if name == &selected_name {
-                                    return Ok(Some(device.clone()));
-                                }
-                            }
-                        }
+            // Try auto-select Polar H10 for testing, otherwise prompt
+            let selected_name = if device_options.iter().any(|d| d.contains("Polar H10")) {
+                println!("Auto-selecting Polar H10...");
+                "Polar H10 CA549123".to_string()
+            } else {
+                match Select::new("Select device:", device_options).prompt() {
+                    Ok(name) => name,
+                    Err(_) => {
+                        return Ok(None);
                     }
                 }
-                Err(_) => {
-                    return Ok(None);
+            };
+
+            for device in devices.iter() {
+                if let Ok(Some(props)) = device.properties().await {
+                    if let Some(name) = &props.local_name {
+                        if name == &selected_name || (name.contains("Polar H10") && selected_name.contains("Polar H10")) {
+                            return Ok(Some(device.clone()));
+                        }
+                    }
                 }
             }
         }
@@ -158,16 +167,20 @@ impl Application {
         context: &HookContext,
     ) -> Result<()> {
         // Connect to the device
+        println!("Connecting to device...");
         device
             .connect()
             .await
             .context("Failed to connect to device")?;
+        println!("✓ Connected");
 
         // Discover services
+        println!("Discovering services...");
         device
             .discover_services()
             .await
             .context("Failed to discover services")?;
+        println!("✓ Services discovered");
 
         // Create LSL stream manager
         let device_name = context.device_name.as_deref().unwrap_or("unknown");

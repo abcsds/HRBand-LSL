@@ -1,0 +1,260 @@
+[
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/asio_objects.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/asio_objects.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/asio_objects.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/asio_objects.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/atomic/src/lockpool.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/atomic/src/lockpool.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/atomic/src/lockpool.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/atomic/src/lockpool.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/chrono/src/chrono.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/chrono/src/chrono.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/chrono/src/chrono.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/chrono/src/chrono.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/archive_exception.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/archive_exception.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/archive_exception.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/archive_exception.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_archive.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_archive.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_archive.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_archive.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_iarchive.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_iarchive.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_iarchive.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_iarchive.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_iserializer.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_iserializer.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_iserializer.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_iserializer.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_oarchive.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_oarchive.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_oarchive.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_oarchive.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_oserializer.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_oserializer.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_oserializer.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_oserializer.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_serializer_map.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_serializer_map.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/basic_serializer_map.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/basic_serializer_map.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/extended_type_info.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/extended_type_info.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/extended_type_info.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/extended_type_info.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/extended_type_info_typeid.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/extended_type_info_typeid.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/extended_type_info_typeid.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/extended_type_info_typeid.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/void_cast.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/void_cast.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/serialization/src/void_cast.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/serialization/src/void_cast.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/thread/src/pthread/once.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/thread/src/pthread/once.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/thread/src/pthread/once.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/thread/src/pthread/once.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslboost.dir/lslboost/libs/thread/src/pthread/thread.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/thread/src/pthread/thread.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost/libs/thread/src/pthread/thread.cpp",
+  "output": "CMakeFiles/lslboost.dir/lslboost/libs/thread/src/pthread/thread.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/api_config.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/api_config.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/api_config.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/api_config.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/cancellation.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/cancellation.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/cancellation.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/cancellation.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/cast.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/cast.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/cast.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/cast.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/common.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/common.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/common.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/common.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/consumer_queue.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/consumer_queue.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/consumer_queue.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/consumer_queue.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/data_receiver.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/data_receiver.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/data_receiver.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/data_receiver.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/info_receiver.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/info_receiver.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/info_receiver.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/info_receiver.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/inlet_connection.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/inlet_connection.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/inlet_connection.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/inlet_connection.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_continuous_resolver_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_continuous_resolver_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_continuous_resolver_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_continuous_resolver_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -DLSL_LIBRARY_INFO_STR=\"\\\"git:/branch:/build:Release/compiler:GNU-13.4.0/boost:\\\" BOOST_LIB_VERSION\" -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_freefuncs_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_freefuncs_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_freefuncs_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_freefuncs_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_inlet_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_inlet_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_inlet_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_inlet_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_outlet_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_outlet_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_outlet_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_outlet_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_streaminfo_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_streaminfo_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_streaminfo_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_streaminfo_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/lsl_xml_element_c.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_xml_element_c.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/lsl_xml_element_c.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/lsl_xml_element_c.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/pugixml/pugixml.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/pugixml/pugixml.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/pugixml/pugixml.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/pugixml/pugixml.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/resolver_impl.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/resolver_impl.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/resolver_impl.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/resolver_impl.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/resolve_attempt_udp.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/resolve_attempt_udp.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/resolve_attempt_udp.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/resolve_attempt_udp.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/sample.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/sample.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/sample.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/sample.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/send_buffer.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/send_buffer.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/send_buffer.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/send_buffer.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/socket_utils.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/socket_utils.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/socket_utils.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/socket_utils.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/stream_info_impl.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/stream_info_impl.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/stream_info_impl.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/stream_info_impl.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/stream_outlet_impl.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/stream_outlet_impl.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/stream_outlet_impl.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/stream_outlet_impl.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/tcp_server.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/tcp_server.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/tcp_server.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/tcp_server.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/time_postprocessor.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/time_postprocessor.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/time_postprocessor.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/time_postprocessor.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/time_receiver.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/time_receiver.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/time_receiver.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/time_receiver.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/g++ -DBOOST_ALL_NO_LIB -DBOOST_ASIO_SEPARATE_COMPILATION -DLIBLSL_EXPORTS -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/lslboost  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIC -fvisibility=hidden -o CMakeFiles/lslobj.dir/src/udp_server.cpp.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/udp_server.cpp",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/src/udp_server.cpp",
+  "output": "CMakeFiles/lslobj.dir/src/udp_server.cpp.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/gcc -DLIBLSL_STATIC -DLSLNOAUTOLINK -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIE -o CMakeFiles/lslver-static.dir/testing/lslver.c.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/testing/lslver.c",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/testing/lslver.c",
+  "output": "CMakeFiles/lslver-static.dir/testing/lslver.c.o"
+},
+{
+  "directory": "/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build",
+  "command": "/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/gcc -DLSLNOAUTOLINK -I/home/beto/code/HRBand-LSL/target/release/build/lsl-sys-b9d8c70acdf76a9f/out/build -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl -I/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/include  -ffunction-sections -fdata-sections -fPIC -m64 -w -O3 -DNDEBUG -fPIE -o CMakeFiles/lslver.dir/testing/lslver.c.o -c /home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/testing/lslver.c",
+  "file": "/home/beto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lsl-sys-0.1.1/liblsl/testing/lslver.c",
+  "output": "CMakeFiles/lslver.dir/testing/lslver.c.o"
+}
+]

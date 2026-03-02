@@ -67,6 +67,7 @@ impl BleDeviceManager {
                 if let Some(local_name) = properties.local_name {
                     // Exclude devices with "-" in name
                     if !local_name.contains('-') && !local_name.is_empty() {
+                        println!("  ✓ {}", local_name);
                         filtered.push(device);
                     }
                 }
