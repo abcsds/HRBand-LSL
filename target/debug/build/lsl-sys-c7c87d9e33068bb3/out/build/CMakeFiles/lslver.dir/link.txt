@@ -1,0 +1,1 @@
+/nix/store/9qqhx0a9270lq4n64a8k46vjlnvd7301-gcc-wrapper-13.4.0/bin/gcc  -ffunction-sections -fdata-sections -fPIC -m64 -w -g -Wl,--dependency-file=CMakeFiles/lslver.dir/link.d CMakeFiles/lslver.dir/testing/lslver.c.o -o lslver  -Wl,-rpath,/home/beto/code/HRBand-LSL/target/debug/build/lsl-sys-c7c87d9e33068bb3/out/build: liblsl.so.1.13.1

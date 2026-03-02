@@ -1,0 +1,1 @@
+Pin<Box<dyn std::future::Future<Output = Result<Option<PeripheralProperties>, btleplug::Error>> + Send>>

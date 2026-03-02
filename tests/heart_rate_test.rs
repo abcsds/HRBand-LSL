@@ -11,7 +11,7 @@ fn test_parse_hr_uint8_format() {
     // Energy expended: 100 (uint16 LE)
     let data = vec![0x08, 75, 100, 0];
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 75);
     assert_eq!(result.sensor_contact, None);
     assert_eq!(result.energy_expended, Some(100));
@@ -28,7 +28,7 @@ fn test_parse_hr_uint16_format() {
     // HR: 300 (uint16 LE at indices 1-2)
     let data = vec![0x01, 44, 1]; // 300 in LE = [44, 1] = 0x012C
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 300);
     assert_eq!(result.sensor_contact, None);
     assert_eq!(result.energy_expended, None);
@@ -48,7 +48,7 @@ fn test_parse_with_rr_intervals() {
     // 1200 = 0x04B0 LE = [0xB0, 0x04]
     let data = vec![0x10, 72, 0xE8, 0x03, 0xB0, 0x04];
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 72);
     assert_eq!(result.sensor_contact, None);
     assert_eq!(result.energy_expended, None);
@@ -65,7 +65,7 @@ fn test_parse_with_sensor_contact_detected() {
     // HR: 80 (uint16 LE)
     let data = vec![0x07, 80, 0];
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 80);
     assert_eq!(result.sensor_contact, Some(true));
     assert_eq!(result.energy_expended, None);
@@ -82,7 +82,7 @@ fn test_parse_with_sensor_contact_no_contact() {
     // HR: 65 (uint8)
     let data = vec![0x04, 65];
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 65);
     assert_eq!(result.sensor_contact, Some(false));
     assert_eq!(result.energy_expended, None);
@@ -101,7 +101,7 @@ fn test_parse_all_fields_present() {
     // RR intervals: one value (950ms = 0x03B6) = [182, 3] in LE
     let data = vec![0x1F, 120, 0, 244, 1, 182, 3];
     let result = parse_heart_rate_measurement(&data).unwrap();
-    
+
     assert_eq!(result.heart_rate, 120);
     assert_eq!(result.sensor_contact, Some(true));
     assert_eq!(result.energy_expended, Some(500));

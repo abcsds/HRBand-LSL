@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/beto/code/HRBand-LSL/target/debug/build/lsl-sys-c7c87d9e33068bb3/out/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
