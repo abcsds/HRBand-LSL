@@ -191,11 +191,72 @@ impl Application {
         // Pre-stream hook
         self.hook_registry.execute(HookPoint::PreStream, context)?;
 
-        // Listen for notifications (simulated for now - in production would use actual notification handler)
-        // For now, just wait a bit and then disconnect
-        tokio::time::sleep(Duration::from_secs(30)).await;
+        println!("Connected to device. Listening for heart rate data (Ctrl+C to stop)...");
 
-        // Post-stream hook
+        // Get notification stream
+        let mut notification_stream = device
+            .notifications()
+            .await
+            .context("Failed to get notification stream")?;
+
+        // Create LSL stream manager for actual streaming
+        let mut lsl_manager = LslStreamManager::new(context.device_name.as_deref().unwrap_or("unknown"))?;
+
+        // Listen for notifications and process heart rate data
+        use futures::StreamExt;
+        loop {
+            tokio::select! {
+                Some(notification) = notification_stream.next() => {
+                    // Check if this is the heart rate characteristic
+                    if notification.uuid == ble::HR_MEASUREMENT_UUID {
+                        match heart_rate::parse_heart_rate_measurement(&notification.value) {
+                            Ok(hr_data) => {
+                                // Create context with received data
+                                let mut data_context = context.clone();
+                                data_context.heart_rate = Some(hr_data.heart_rate as u8);
+                                data_context.rr_intervals = hr_data.rr_intervals.clone();
+
+                                // DataReceived hook
+                                if let Err(e) = self.hook_registry
+                                    .execute(HookPoint::DataReceived, &data_context) {
+                                    eprintln!("Hook error: {}", e);
+                                }
+
+                                // Print and stream heart rate
+                                println!("HR: {}", hr_data.heart_rate);
+                                if let Err(e) = lsl_manager.push_heart_rate(hr_data.heart_rate) {
+                                    eprintln!("Failed to push HR to LSL: {}", e);
+                                }
+
+                                // Process RR intervals
+                                for rr in &hr_data.rr_intervals {
+                                    println!("    RR: {}", rr);
+                                    if let Err(e) = lsl_manager.push_rr_interval(*rr) {
+                                        eprintln!("Failed to push RR to LSL: {}", e);
+                                    }
+                                }
+
+                                // PostStream hook
+                                if let Err(e) = self.hook_registry
+                                    .execute(HookPoint::PostStream, &data_context) {
+                                    eprintln!("Hook error: {}", e);
+                                }
+                            }
+                            Err(e) => {
+                                eprintln!("Failed to parse heart rate data: {}", e);
+                            }
+                        }
+                    }
+                }
+                else => {
+                    // Notification stream ended
+                    println!("Notification stream ended");
+                    break;
+                }
+            }
+        }
+
+        // Post-stream hook (final)
         self.hook_registry.execute(HookPoint::PostStream, context)?;
 
         // Disconnect
