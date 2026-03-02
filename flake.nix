@@ -16,10 +16,17 @@
           buildInputs = with pkgs; [
             cargo
             rustc
+            rustfmt
+            clippy
             pkg-config
             dbus
             cmake
+            gcc13
           ];
+          shellHook = ''
+            export CC=${pkgs.gcc13}/bin/gcc
+            export CXX=${pkgs.gcc13}/bin/g++
+          '';
         };
       }
     );
