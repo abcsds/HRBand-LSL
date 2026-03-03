@@ -1,1 +1,17 @@
-.venv
+# Rust
+/target/
+Cargo.lock
+result
+*.rlib
+*.rmeta
+
+# Python (for reference, but removed from this branch)
+.venv/
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
