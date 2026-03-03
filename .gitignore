@@ -4,3 +4,13 @@ __pycache__/
 *.pyo
 *.pyd
 .pytest_cache/
+
+# Rust build artifacts (in case you check out main)
+/src/
+/target/
+/examples/
+/tests/
+/.cargo/
+result
+Cargo.toml
+Cargo.lock
