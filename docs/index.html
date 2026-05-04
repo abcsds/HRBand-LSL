@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HRBand-LSL — BLE heart rate to Lab Streaming Layer</title>
+<meta name="description" content="Stream BLE heart rate (HR + R-R / peak-to-peak intervals) to Lab Streaming Layer for psychophysiology, HRV, and cognitive-load research. Rust, MIT.">
+<link rel="canonical" href="https://abcsds.github.io/HRBand-LSL/">
+<meta property="og:title" content="HRBand-LSL">
+<meta property="og:description" content="BLE heart rate (HR + RR/PP intervals) to Lab Streaming Layer for psychophysiology research.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap">
+
+<style>
+  /* --- Tokens (light) ------------------------------------------------- */
+  :root {
+    --bg:           #F8FAFC;
+    --fg:           #1E293B;
+    --fg-soft:      #475569;
+    --muted:        #EAEFF3;
+    --border:       #E2E8F0;
+    --accent:       #2563EB;
+    --accent-soft:  #DBEAFE;
+    --hr-line:      #1E40AF;
+    --rr-mark:      #15803D;
+    --pp-mark:      #B45309;
+    --warn:         #DC2626;
+
+    --font-display: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+    --font-body:    'Atkinson Hyperlegible', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --font-mono:    ui-monospace, SFMono-Regular, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+
+    --measure: 65ch;
+    --gutter:  clamp(1rem, 3vw, 2rem);
+  }
+  /* --- Tokens (dark) -------------------------------------------------- */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:          #0F172A;
+      --fg:          #F1F5F9;
+      --fg-soft:     #94A3B8;
+      --muted:       #1E293B;
+      --border:      #334155;
+      --accent:      #60A5FA;
+      --accent-soft: #1E3A8A;
+      --hr-line:     #93C5FD;
+      --rr-mark:     #86EFAC;
+      --pp-mark:     #FCD34D;
+      --warn:        #F87171;
+    }
+  }
+
+  /* --- Reset / base --------------------------------------------------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 0.06em;
+  }
+  a:hover { text-decoration-thickness: 0.12em; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection { background: var(--accent-soft); color: var(--fg); }
+
+  /* --- Headings ------------------------------------------------------- */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--fg);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6em;
+  }
+  h1 { font-size: clamp(2.6rem, 8vw, 5.2rem); letter-spacing: -0.02em; font-weight: 700; }
+  h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); margin-top: 0; }
+  h3 { font-size: 1.15rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; text-transform: uppercase; color: var(--fg-soft); margin-bottom: 0.4em; }
+
+  p { margin: 0 0 1em; max-width: var(--measure); }
+  p.lead { font-size: 1.2rem; color: var(--fg-soft); max-width: 60ch; }
+
+  /* --- Layout --------------------------------------------------------- */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
+  header.site {
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 0;
+    font-size: 0.92rem;
+  }
+  header.site .row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+  }
+  header.site strong { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: -0.01em; }
+  header.site nav a { margin-left: 1.4rem; color: var(--fg-soft); text-decoration: none; }
+  header.site nav a:hover { color: var(--accent); }
+  @media (max-width: 540px) {
+    header.site nav a:nth-child(n+3) { display: none; }
+  }
+
+  section { padding: 4.5rem 0; border-bottom: 1px solid var(--border); }
+  section.hero { padding: 6rem 0 5rem; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: 0; }
+
+  /* --- Hero ----------------------------------------------------------- */
+  .hero h1 { margin-bottom: 0.3em; }
+  .hero .meta {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--fg-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.5em;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    font-family: var(--font-body);
+    font-size: 1rem; font-weight: 700;
+    padding: 0.78em 1.3em;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--fg); }
+  .btn-ghost { color: var(--fg); border-color: var(--border); background: transparent; }
+  .btn-ghost:hover { border-color: var(--fg); }
+  .btn svg { width: 1em; height: 1em; flex: 0 0 auto; }
+
+  /* --- Cards / data shape -------------------------------------------- */
+  .stream-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .stream-card {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 1.4rem 1.4rem 1.2rem;
+    border-radius: 4px;
+  }
+  .stream-card .name {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin: 0 0 0.6em;
+    word-break: break-word;
+  }
+  .stream-card .kv {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.15em 0.8em;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--fg-soft);
+    margin: 0 0 1rem;
+  }
+  .stream-card .kv dt { color: var(--fg-soft); }
+  .stream-card .kv dd { margin: 0; color: var(--fg); }
+  .stream-card svg.spark { display: block; width: 100%; height: 56px; margin-bottom: 0.6rem; }
+  .stream-card .latest {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--fg);
+  }
+  .stream-card .latest .unit { color: var(--fg-soft); margin-left: 0.2em; font-size: 0.85em; }
+
+  /* --- Code blocks --------------------------------------------------- */
+  pre, code, kbd, samp { font-family: var(--font-mono); }
+  code {
+    background: var(--muted);
+    padding: 0.12em 0.35em;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    margin: 0 0 1.4rem;
+  }
+  pre code { background: none; padding: 0; font-size: 1em; }
+  pre .c   { color: var(--fg-soft); }                /* comment */
+  pre .p   { color: var(--accent); }                 /* prompt */
+  pre .k   { color: var(--hr-line); font-weight: 700; } /* keyword */
+  pre .s   { color: var(--rr-mark); }                /* string */
+  pre .n   { color: var(--pp-mark); }                /* number */
+
+  .codeblock-header {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem;
+  }
+
+  /* --- Tables -------------------------------------------------------- */
+  .table-wrap { overflow-x: auto; margin: 0 0 1.5rem; border: 1px solid var(--border); border-radius: 4px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.93rem;
+  }
+  thead th {
+    text-align: left;
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.85rem 1rem;
+    background: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 0.85rem 1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody td.mono { font-family: var(--font-mono); font-size: 0.85rem; }
+
+  /* --- Notes / aside ------------------------------------------------- */
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--muted);
+    padding: 1rem 1.2rem;
+    border-radius: 0 4px 4px 0;
+    margin: 1.2rem 0;
+    font-size: 0.95rem;
+    max-width: var(--measure);
+  }
+  .note strong { color: var(--fg); }
+
+  /* --- Two-column on wider screens ---------------------------------- */
+  .two-col { display: grid; gap: 2rem; }
+  @media (min-width: 820px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* --- Footer -------------------------------------------------------- */
+  footer.site {
+    padding: 2.5rem 0 3rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.88rem;
+    color: var(--fg-soft);
+  }
+  footer.site .row {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: baseline; justify-content: space-between;
+  }
+  footer.site a { color: var(--fg-soft); text-decoration: none; }
+  footer.site a:hover { color: var(--accent); text-decoration: underline; }
+
+  /* --- Reduced motion ------------------------------------------------ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+
+  /* --- Print --------------------------------------------------------- */
+  @media print {
+    header.site nav, .cta-row, footer.site .related { display: none; }
+    body { color: #000; background: #fff; }
+    a { color: #000; text-decoration: underline; }
+    section { page-break-inside: avoid; padding: 1.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container row">
+    <strong>HRBand-LSL</strong>
+    <nav aria-label="Primary">
+      <a href="#data-shape">Data shape</a>
+      <a href="#install">Install</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#cite">Cite</a>
+      <a href="https://github.com/abcsds/HRBand-LSL">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- =====================================================================
+       HERO
+       ===================================================================== -->
+  <section class="hero">
+    <p class="meta">v0.2.0 · Rust · MIT · BLE → LSL</p>
+    <h1>Heart rate, straight into LabStreamingLayer.</h1>
+    <p class="lead">
+      A small Rust bridge that connects to a Bluetooth Low Energy heart-rate
+      band and pushes <abbr title="Heart rate, beats per minute">HR</abbr> and
+      beat-to-beat intervals (<abbr title="R-R, from ECG bands like the Polar H10">RR</abbr>
+      or <abbr title="Peak-to-peak, from PPG bands like the Polar Verity Sense">PP</abbr>)
+      into <a href="https://labstreaminglayer.org/">Lab Streaming Layer</a>
+      as int32 marker streams. Built for psychophysiology, HRV, and
+      cognitive-load experiments where you need a clean, time-aligned
+      cardiac channel alongside EEG, GSR, eye-tracking, or task events.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/abcsds/HRBand-LSL">
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
+      <a class="btn btn-ghost" href="#install">Quick start</a>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       ABSTRACT
+       ===================================================================== -->
+  <section id="overview">
+    <h2>What it is</h2>
+    <p>
+      <strong>HRBand-LSL</strong> scans for any BLE device exposing the
+      standard Heart Rate Service (<code>0x180D</code>), connects on
+      selection, parses the Heart Rate Measurement characteristic
+      (<code>0x2A37</code>), and publishes two LSL outlets per session: one
+      for instantaneous heart rate (bpm), one for the corresponding
+      beat-to-beat intervals in milliseconds.
+    </p>
+    <p>
+      Bands are split into two protocol paths. ECG-based bands
+      (Polar H10, Wahoo TICKR, Garmin HRM-Pro) advertise true R-R intervals
+      directly on <code>0x2A37</code> — the bridge labels these as
+      <code>RR</code>. PPG-based bands (Polar Verity Sense, OH1, OH1+) do
+      not, so the bridge falls through to Polar's vendor PMD service and
+      subscribes to peak-to-peak (PPI) frames; these are labelled as
+      <code>PP</code>. Receivers can therefore tell at a glance whether a
+      stream is suitable for clinical-grade HRV (RR) or only for an
+      approximation of it (PP).
+    </p>
+    <p>
+      The bridge is a single static binary, has no GUI, runs from the
+      shell or from a Nix flake, and produces streams that are
+      bit-compatible with the Android sibling
+      (<a href="https://github.com/abcsds/RRStreamer">RRStreamer</a>) and
+      the historical Python reference. LabRecorder, pylsl receivers, and
+      LabStreamingLayer-aware acquisition software pick up both outlets
+      with no special configuration.
+    </p>
+  </section>
+
+  <!-- =====================================================================
+       DATA SHAPE
+       ===================================================================== -->
+  <section id="data-shape">
+    <h2>Data shape</h2>
+    <p>
+      Each session produces exactly two LSL outlets. The interval outlet's
+      name reflects its physiological provenance — <code>RR</code> from
+      ECG, <code>PP</code> from PPG. Sample shape, channel count, and
+      format are identical so a downstream receiver written against the
+      Python or Android reference works without changes.
+    </p>
+
+    <div class="stream-grid" role="list">
+      <!-- HR card -->
+      <article class="stream-card" role="listitem">
+        <p class="name">HR &lt;device&gt;</p>
+        <dl class="kv">
+          <dt>type</dt>     <dd>Markers</dd>
+          <dt>channels</dt> <dd>1 × int32</dd>
+          <dt>rate</dt>     <dd>irregular</dd>
+          <dt>unit</dt>     <dd>bpm</dd>
+        </dl>
+        <!-- Sparkline: HR samples from a real Polar Sense run.
+             Y axis: 50–62 bpm. X axis: 22 samples (~22 beats). -->
+        <svg class="spark" viewBox="0 0 220 56" preserveAspectRatio="none" role="img" aria-label="Heart rate samples 54 to 59 bpm">
+          <polyline fill="none" stroke="var(--hr-line)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"
+            points="0,30 10,30 20,30 30,30 40,30 50,30 60,30 70,30 80,21 90,21 100,21 110,21 120,21 130,21 140,21 150,30 160,30 170,30 180,12 190,12 200,12 210,12" />
+        </svg>
+        <p class="latest">57 <span class="unit">bpm</span></p>
+      </article>
+
+      <!-- RR card -->
+      <article class="stream-card" role="listitem">
+        <p class="name">RR &lt;device&gt;</p>
+        <dl class="kv">
+          <dt>type</dt>     <dd>Markers</dd>
+          <dt>channels</dt> <dd>1 × int32</dd>
+          <dt>rate</dt>     <dd>irregular (per beat)</dd>
+          <dt>unit</dt>     <dd>ms</dd>
+        </dl>
+        <!-- Sparkline: representative RR intervals 850–1080 ms.
+             Plotted as small markers on a 56px canvas. -->
+        <svg class="spark" viewBox="0 0 220 56" preserveAspectRatio="none" role="img" aria-label="R-R interval markers between 850 and 1080 milliseconds">
+          <line x1="0" y1="48" x2="220" y2="48" stroke="var(--border)" stroke-width="1"/>
+          <g fill="var(--rr-mark)">
+            <circle cx="6"   cy="22" r="2.4"/>
+            <circle cx="22"  cy="18" r="2.4"/>
+            <circle cx="38"  cy="26" r="2.4"/>
+            <circle cx="54"  cy="20" r="2.4"/>
+            <circle cx="70"  cy="14" r="2.4"/>
+            <circle cx="86"  cy="24" r="2.4"/>
+            <circle cx="102" cy="16" r="2.4"/>
+            <circle cx="118" cy="22" r="2.4"/>
+            <circle cx="134" cy="28" r="2.4"/>
+            <circle cx="150" cy="20" r="2.4"/>
+            <circle cx="166" cy="12" r="2.4"/>
+            <circle cx="182" cy="18" r="2.4"/>
+            <circle cx="198" cy="26" r="2.4"/>
+            <circle cx="214" cy="22" r="2.4"/>
+          </g>
+        </svg>
+        <p class="latest">977 <span class="unit">ms · ECG-derived</span></p>
+      </article>
+
+      <!-- PP card -->
+      <article class="stream-card" role="listitem">
+        <p class="name">PP &lt;device&gt;</p>
+        <dl class="kv">
+          <dt>type</dt>     <dd>Markers</dd>
+          <dt>channels</dt> <dd>1 × int32</dd>
+          <dt>rate</dt>     <dd>irregular (per beat)</dd>
+          <dt>unit</dt>     <dd>ms</dd>
+        </dl>
+        <!-- Sparkline: real PP samples observed on Polar Sense (1009–1130 ms). -->
+        <svg class="spark" viewBox="0 0 220 56" preserveAspectRatio="none" role="img" aria-label="Peak-to-peak interval markers between 1009 and 1130 milliseconds, observed on a Polar Verity Sense">
+          <line x1="0" y1="48" x2="220" y2="48" stroke="var(--border)" stroke-width="1"/>
+          <g fill="var(--pp-mark)">
+            <circle cx="6"   cy="20" r="2.4"/>
+            <circle cx="22"  cy="28" r="2.4"/>
+            <circle cx="38"  cy="22" r="2.4"/>
+            <circle cx="54"  cy="24" r="2.4"/>
+            <circle cx="70"  cy="30" r="2.4"/>
+            <circle cx="86"  cy="28" r="2.4"/>
+            <circle cx="102" cy="26" r="2.4"/>
+            <circle cx="118" cy="32" r="2.4"/>
+            <circle cx="134" cy="30" r="2.4"/>
+            <circle cx="150" cy="20" r="2.4"/>
+            <circle cx="166" cy="14" r="2.4"/>
+            <circle cx="182" cy="22" r="2.4"/>
+            <circle cx="198" cy="18" r="2.4"/>
+            <circle cx="214" cy="20" r="2.4"/>
+          </g>
+        </svg>
+        <p class="latest">1086 <span class="unit">ms · PPG-derived (approx.)</span></p>
+      </article>
+    </div>
+
+    <h3 style="margin-top:2.5rem">Stream contract</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Stream name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Channels</th>
+            <th scope="col">Format</th>
+            <th scope="col">Source ID</th>
+            <th scope="col">Sample rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">HR &lt;device&gt;</td>
+            <td>Markers</td>
+            <td>1</td>
+            <td class="mono">int32</td>
+            <td class="mono">HR_markers_&lt;device&gt;</td>
+            <td>irregular</td>
+          </tr>
+          <tr>
+            <td class="mono">RR &lt;device&gt;</td>
+            <td>Markers</td>
+            <td>1</td>
+            <td class="mono">int32</td>
+            <td class="mono">RR_markers_&lt;device&gt;</td>
+            <td>irregular (per beat)</td>
+          </tr>
+          <tr>
+            <td class="mono">PP &lt;device&gt;</td>
+            <td>Markers</td>
+            <td>1</td>
+            <td class="mono">int32</td>
+            <td class="mono">PP_markers_&lt;device&gt;</td>
+            <td>irregular (per beat)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="codeblock-header">// Sample lines, as printed by the bridge during a Polar Verity Sense session</p>
+<pre><code><span class="c">[ok]</span> LSL outlets created (HR + PP)
+PMD CP returned SUCCESS; PPI streaming committed
+HR: <span class="n">57</span>  PP: [<span class="n">1051</span>] ms
+HR: <span class="n">57</span>  PP: [<span class="n">1034</span>] ms
+HR: <span class="n">57</span>  PP: [<span class="n">1070</span>] ms
+HR: <span class="n">59</span>  PP: [<span class="n">1009</span>] ms
+HR: <span class="n">55</span>  PP: [<span class="n">1083</span>] ms
+HR: <span class="n">55</span>  PP: [<span class="n">1094</span>] ms
+HR: <span class="n">55</span>  PP: [<span class="n">1080</span>] ms</code></pre>
+  </section>
+
+  <!-- =====================================================================
+       INSTALL / QUICK START
+       ===================================================================== -->
+  <section id="install">
+    <h2>Quick start</h2>
+
+    <h3>Run with Nix (one-shot)</h3>
+<pre><code><span class="p">$</span> nix run github:abcsds/HRBand-LSL</code></pre>
+
+    <h3>Build from source with Cargo</h3>
+<pre><code><span class="p">$</span> git clone https://github.com/abcsds/HRBand-LSL
+<span class="p">$</span> cd HRBand-LSL
+<span class="p">$</span> nix develop --command cargo build --release
+<span class="p">$</span> ./target/release/hrband-lsl</code></pre>
+
+    <p>
+      The application scans for 5 seconds, lists detected bands, and either
+      auto-selects (when exactly one Polar device is in range) or prompts.
+      Once subscribed it prints HR + interval samples to stdout and pushes
+      them to LSL until interrupted by <code>Ctrl-C</code> or
+      <code>SIGTERM</code>; on shutdown it writes <code>STOP_PPI</code> to
+      Polar PMD bands so the band's battery isn't drained by an orphaned
+      subscription.
+    </p>
+
+    <h3>Receive in Python (pylsl)</h3>
+<pre><code><span class="k">import</span> pylsl
+
+<span class="c"># Resolve every stream, print sample values from each HR/RR/PP outlet.</span>
+streams = pylsl.resolve_streams(wait_time=<span class="n">5.0</span>)
+inlets  = [pylsl.StreamInlet(s) <span class="k">for</span> s <span class="k">in</span> streams
+           <span class="k">if</span> s.name().startswith((<span class="s">'HR '</span>, <span class="s">'RR '</span>, <span class="s">'PP '</span>))]
+
+<span class="k">while</span> <span class="k">True</span>:
+    <span class="k">for</span> inlet <span class="k">in</span> inlets:
+        sample, ts = inlet.pull_sample(timeout=<span class="n">0.0</span>)
+        <span class="k">if</span> sample <span class="k">is</span> <span class="k">not</span> <span class="k">None</span>:
+            <span class="k">print</span>(<span class="s">f'{ts:.3f}  {inlet.info().name()}: {sample[0]}'</span>)</code></pre>
+  </section>
+
+  <!-- =====================================================================
+       HARDWARE
+       ===================================================================== -->
+  <section id="hardware">
+    <h2>Hardware</h2>
+    <p>
+      Anything advertising the BLE Heart Rate Service should be discoverable;
+      the protocol path the bridge takes is decided automatically from the
+      first Heart Rate Measurement frame and (for PPG bands) the presence
+      of Polar's vendor PMD service.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Band</th>
+            <th scope="col">Sensor type</th>
+            <th scope="col">Protocol path</th>
+            <th scope="col">Interval label</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Polar H10</td>
+            <td>ECG (chest)</td>
+            <td class="mono">0x2A37 (RR-bit)</td>
+            <td class="mono">RR</td>
+            <td>Tested · clinical-grade HRV source</td>
+          </tr>
+          <tr>
+            <td>Polar Verity Sense</td>
+            <td>PPG (optical)</td>
+            <td class="mono">PMD / PPI</td>
+            <td class="mono">PP</td>
+            <td>Tested · PMD/PPI path</td>
+          </tr>
+          <tr>
+            <td>Polar OH1 / OH1+</td>
+            <td>PPG (optical)</td>
+            <td class="mono">PMD / PPI</td>
+            <td class="mono">PP</td>
+            <td>Same protocol path as Verity Sense</td>
+          </tr>
+          <tr>
+            <td>Wahoo TICKR, Garmin HRM-Pro, etc.</td>
+            <td>ECG (chest)</td>
+            <td class="mono">0x2A37 (RR-bit)</td>
+            <td class="mono">RR</td>
+            <td>Expected to work via standard path</td>
+          </tr>
+          <tr>
+            <td>Generic HR-only band</td>
+            <td>any</td>
+            <td class="mono">0x2A37 (HR only)</td>
+            <td class="mono">RR (intervals empty)</td>
+            <td>HR stream only; interval outlet stays silent</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>RR vs PP — why the distinction matters.</strong>
+      R-R intervals from ECG bands are direct observations of the cardiac
+      cycle and are suitable inputs to clinical HRV measures (RMSSD, SDNN,
+      pNN50, frequency-domain decomposition). Peak-to-peak intervals from
+      PPG bands are derived from the optical pulse waveform and smooth out
+      short cycles; downstream HRV metrics computed from PP are an
+      <em>approximation</em>. The bridge keeps the two streams nominally
+      separate so analysis pipelines can branch on provenance instead of
+      treating the data as interchangeable.
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       ARCHITECTURE
+       ===================================================================== -->
+  <section id="architecture">
+    <h2>Architecture</h2>
+    <p>
+      Single-process Rust binary on top of <code>btleplug</code> (BLE) and
+      a thin direct FFI to <code>liblsl</code>. Protocol selection is a
+      small state machine; the LSL outlets are constructed lazily once the
+      first frame settles which kind it is.
+    </p>
+<pre><code>  +--------------+       +-----------+       +--------------+       +-------------+
+  |  BLE band    |  -->  | btleplug  |  -->  | HeartRateClient|  --> | LslOutlet   |
+  |  (HR / PMD)  |       | (Linux/   |       |  parse + state  |     | (HR + RR/PP)|
+  |              |       |  macOS/   |       |  machine        |     |             |
+  +--------------+       |  Win)     |       +-------+--------+      +------+------+
+                         +-----------+               |                       |
+                                                     v                       v
+                                            +-----------------+      +----------------+
+                                            | parse_hr (RR)   |      | LSL multicast  |
+                                            | polar_pmd (PP)  |      | --> LabRecorder|
+                                            +-----------------+      |    pylsl       |
+                                                                     |    Lab.js etc. |
+                                                                     +----------------+
+
+   protocol selection (first 0x2A37 frame, then 3-frame decision window):
+       RR bit set                 ----> StandardRr
+       no RR bit, no PMD service  ----> HrOnly
+       no RR bit, PMD present     ----> PolarPpi   [unsubscribe 0x2A37,
+                                                    write START_PPI to PMD CP,
+                                                    subscribe to PMD data]</code></pre>
+  </section>
+
+  <!-- =====================================================================
+       CITE
+       ===================================================================== -->
+  <section id="cite">
+    <h2>Citing</h2>
+    <p>
+      If you use HRBand-LSL in published work, a citation back to the
+      repository is appreciated. There is no associated paper; the
+      preferred form is a software citation:
+    </p>
+<pre><code>@software{hrband_lsl_2026,
+  author  = {Barradas, Alberto},
+  title   = {HRBand-LSL: BLE heart rate to Lab Streaming Layer},
+  year    = {2026},
+  version = {0.2.0},
+  license = {MIT},
+  url     = {https://github.com/abcsds/HRBand-LSL}
+}</code></pre>
+    <p>
+      For mobile / Android-side acquisition with the same outlet contract,
+      see the sibling project
+      <a href="https://github.com/abcsds/RRStreamer">RRStreamer</a>.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/abcsds/HRBand-LSL">
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source on GitHub
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/abcsds/HRBand-LSL/blob/main/LICENSE.md">License (MIT)</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container row">
+    <span>HRBand-LSL · MIT · v0.2.0</span>
+    <span class="related">
+      Related:
+      <a href="https://github.com/abcsds/RRStreamer">RRStreamer (Android)</a> ·
+      <a href="https://labstreaminglayer.org/">Lab Streaming Layer</a> ·
+      <a href="https://github.com/labstreaminglayer/App-LabRecorder">LabRecorder</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
