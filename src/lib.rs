@@ -16,6 +16,11 @@ use lsl_stream::LslStreamManager;
 use std::sync::Arc;
 use std::time::Duration;
 
+/// How long to scan for BLE devices on each scan attempt. Five seconds is
+/// enough for most HR bands to advertise once or twice (BLE adv intervals
+/// are typically 100ms–1s); longer if the device is far from the host.
+pub const SCAN_DURATION: Duration = Duration::from_secs(5);
+
 /// Application struct managing the BLE-LSL integration
 pub struct Application {
     hook_registry: HookRegistry,
@@ -58,9 +63,12 @@ impl Application {
             .context("Failed to create BLE device manager")?;
 
         // Scan for devices
-        println!("Scanning for BLE devices (5 seconds)...");
+        println!(
+            "Scanning for BLE devices ({} seconds)...",
+            SCAN_DURATION.as_secs()
+        );
         let devices = ble_manager
-            .scan_devices(Duration::from_secs(5))
+            .scan_devices(SCAN_DURATION)
             .await
             .context("Failed to scan BLE devices")?;
         println!("Found {} raw devices", devices.len());
@@ -120,14 +128,21 @@ impl Application {
         loop {
             if devices.is_empty() {
                 println!("No devices found. Please check your BLE device.");
-                let ans = inquire::Confirm::new("Retry scanning?").prompt()?;
+                // inquire::Confirm::prompt() blocks the current thread on
+                // stdin. Run it on tokio's blocking pool so we don't stall
+                // the runtime worker (and thereby starve the BLE event loop).
+                let ans = tokio::task::spawn_blocking(|| {
+                    inquire::Confirm::new("Retry scanning?").prompt()
+                })
+                .await
+                .context("Confirm prompt task panicked")??;
 
                 if !ans {
                     return Ok(None);
                 }
 
                 // Rescan
-                let rescanned = ble_manager.scan_devices(Duration::from_secs(5)).await?;
+                let rescanned = ble_manager.scan_devices(SCAN_DURATION).await?;
                 devices = ble_manager.filter_devices(rescanned).await?;
                 continue;
             }
@@ -159,11 +174,16 @@ impl Application {
                 println!("Auto-selecting Polar device: {name}");
                 name
             } else {
-                match Select::new("Select device:", device_options).prompt() {
+                // Same blocking-pool dance as Confirm above.
+                let opts = device_options.clone();
+                let prompt_result = tokio::task::spawn_blocking(move || {
+                    Select::new("Select device:", opts).prompt()
+                })
+                .await
+                .context("Select prompt task panicked")?;
+                match prompt_result {
                     Ok(name) => name,
-                    Err(_) => {
-                        return Ok(None);
-                    }
+                    Err(_) => return Ok(None),
                 }
             };
 
@@ -183,7 +203,7 @@ impl Application {
     /// state machine (protocol selection, PMD/PPI subscription chain, STOP_PPI
     /// on close) to [`client::HeartRateClient`]. The closures bridge events
     /// from the client into LSL outlets and registered hooks.
-    pub async fn connect_and_stream(
+    async fn connect_and_stream(
         &self,
         device: btleplug::platform::Peripheral,
         context: &HookContext,
@@ -192,6 +212,11 @@ impl Application {
             .device_name
             .clone()
             .unwrap_or_else(|| "unknown".to_string());
+
+        // Two FnMut closures (`on_protocol`, `on_sample`) each take ownership
+        // of what they need to call. We clone the context + hook registry
+        // once per closure — both clones are cheap (Vec<Arc<dyn Hook>> for the
+        // registry, short String fields for the context).
         let context_for_protocol = context.clone();
         let context_for_sample = context.clone();
         let hook_registry_for_protocol = self.hook_registry_arc();
@@ -218,11 +243,17 @@ impl Application {
         };
 
         let on_sample = move |sample: heart_rate::Sample| -> Result<()> {
-            // Push to LSL
+            // The LSL slot must already hold a manager — `on_protocol` builds
+            // it before any sample fires. Empty slot here would mean the BLE
+            // client violated its own ordering contract; bail loudly.
             let lsl_lock = lsl_for_sample.lock().unwrap();
-            let mgr = lsl_lock
-                .as_ref()
-                .context("Sample received before protocol announce — internal invariant broken")?;
+            let mgr = lsl_lock.as_ref().context(
+                "Sample received before protocol announce — HeartRateClient ordering contract violated",
+            )?;
+
+            // LSL push errors are logged but non-fatal: a transient outlet
+            // failure shouldn't tear down the BLE session, and the next
+            // sample will reattempt.
             if let Err(e) = mgr.push_heart_rate(sample.heart_rate_bpm) {
                 eprintln!("Failed to push HR to LSL: {e}");
             }
@@ -239,8 +270,9 @@ impl Application {
             }
             println!();
 
-            // Build per-sample HookContext. RR vs PP is split into separate
-            // fields so hooks can branch on physiological provenance.
+            // Build per-sample HookContext. RR vs PP populate separate fields
+            // (physiologically distinct measurements) — only ONE is populated
+            // per event; consumers should branch on `interval_kind`.
             let mut data_context = context_for_sample.clone();
             data_context.heart_rate = Some(sample.heart_rate_bpm.min(u8::MAX as u16) as u8);
             data_context.interval_kind = Some(sample.kind);
@@ -248,13 +280,13 @@ impl Application {
                 heart_rate::IntervalKind::Rr => data_context.rr_intervals = sample.intervals_ms,
                 heart_rate::IntervalKind::Pp => data_context.pp_intervals = sample.intervals_ms,
             }
-            if let Err(e) = hook_registry_for_sample.execute(HookPoint::DataReceived, &data_context)
-            {
-                eprintln!("Hook error (DataReceived): {e}");
-            }
-            if let Err(e) = hook_registry_for_sample.execute(HookPoint::PostStream, &data_context) {
-                eprintln!("Hook error (PostStream): {e}");
-            }
+
+            // Hook errors propagate (matching `on_protocol`): a hook returning
+            // Err shuts down the BLE session. This lets a quality-monitor hook
+            // abort streaming on unrecoverable conditions. Document this on
+            // the `Hook` trait if adding new lifecycle points.
+            hook_registry_for_sample.execute(HookPoint::DataReceived, &data_context)?;
+            hook_registry_for_sample.execute(HookPoint::PostStream, &data_context)?;
             Ok(())
         };
 
@@ -265,19 +297,16 @@ impl Application {
         let cancel = async {
             #[cfg(unix)]
             {
+                use std::future::pending;
                 use tokio::signal::unix::{signal, SignalKind};
-                let mut sigterm = match signal(SignalKind::terminate()) {
-                    Ok(s) => s,
-                    Err(e) => {
-                        eprintln!("Failed to install SIGTERM handler: {e}");
-                        let _ = tokio::signal::ctrl_c().await;
-                        println!("\nCtrl-C received; stopping...");
-                        return;
-                    }
-                };
+                let mut sigterm = signal(SignalKind::terminate())
+                    .map_err(|e| eprintln!("SIGTERM handler unavailable: {e}; SIGINT only"))
+                    .ok();
                 tokio::select! {
                     _ = tokio::signal::ctrl_c() => println!("\nCtrl-C received; stopping..."),
-                    _ = sigterm.recv() => println!("\nSIGTERM received; stopping..."),
+                    _ = async { match sigterm.as_mut() { Some(s) => { s.recv().await; }, None => pending().await } } => {
+                        println!("\nSIGTERM received; stopping...")
+                    }
                 }
             }
             #[cfg(not(unix))]

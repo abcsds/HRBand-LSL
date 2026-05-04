@@ -200,7 +200,15 @@ impl HeartRateClient {
         // Cleanup ----------------------------------------------------------
         // Best-effort STOP_PPI so the band's battery isn't drained by an
         // orphaned subscription. Failures are non-fatal — we're closing anyway.
-        if matches!(mode, Mode::PolarPpi { .. }) {
+        // Only fire when streaming actually started (protocol_announced=true);
+        // a band that rejected START_PPI (INVALID_MTU, NOT_SUPPORTED) was never
+        // streaming, so STOP_PPI would be a wasted GATT round-trip.
+        if matches!(
+            mode,
+            Mode::PolarPpi {
+                protocol_announced: true
+            }
+        ) {
             if let Some(cp) = pmd_cp_char.as_ref() {
                 if let Err(e) = self
                     .device
@@ -274,6 +282,9 @@ impl HeartRateClient {
         S: FnMut(Sample) -> Result<()>,
     {
         if let Mode::Initial { hr_only_frames } = *mode {
+            // `hr_only_frames` is the count of *prior* HR-only frames; the
+            // current frame is the (hr_only_frames + 1)-th frame seen on this
+            // session. So "RR seen on frame N" reads N = hr_only_frames + 1.
             match decide_initial(value, hr_only_frames, pmd_present) {
                 InitialDecision::CommitRr => {
                     *mode = Mode::StandardRr;
@@ -287,6 +298,10 @@ impl HeartRateClient {
                 InitialDecision::CommitHrOnly => {
                     *mode = Mode::HrOnly;
                     println!("Protocol selected: HrOnly (no PMD service)");
+                    // The kind label is "RR" — that's just what we observed
+                    // first (no RR bit seen). Future frames from this band
+                    // may still carry RR intervals (the parser handles them
+                    // either way); they'll be emitted on the same outlet.
                     on_protocol(IntervalKind::Rr)?;
                     // fall through to parse-and-emit
                 }
@@ -356,14 +371,37 @@ fn handle_pmd_data<S>(value: &[u8], mode: &Mode, on_sample: &mut S) -> Result<()
 where
     S: FnMut(Sample) -> Result<()>,
 {
-    if !matches!(mode, Mode::PolarPpi { .. }) {
+    // Gate on `protocol_announced: true` (not just any PolarPpi sub-state):
+    // PMD data notifications can arrive between `subscribe(data).await` and
+    // the CP success indication that calls `on_protocol`. Until on_protocol
+    // has fired, downstream consumers (LSL outlets) don't exist yet, so
+    // emitting here would force the caller to either panic on the missing
+    // outlet or buffer indefinitely. Drop the early frames; the band keeps
+    // emitting at >1Hz so we don't lose anything meaningful.
+    if !matches!(
+        mode,
+        Mode::PolarPpi {
+            protocol_announced: true
+        }
+    ) {
         return Ok(());
     }
     let samples = polar_pmd::parse_ppi_frame(value);
     if samples.is_empty() {
         // Either a non-PPI frame on this characteristic (shouldn't happen) or
-        // every sample was filtered (no contact / HR=0 / PPI=0). Quiet — we
-        // only care about real samples here. If you need to debug, log `value`.
+        // every sample was filtered (no contact / HR=0 / PPI=0). Quiet by
+        // default — set HRBAND_LSL_DEBUG_PMD=1 to see hex dumps when chasing
+        // contact / signal-quality issues. Mirrors the Android sibling's
+        // debug logging at HeartRateClient.kt:282-283.
+        if std::env::var_os("HRBAND_LSL_DEBUG_PMD").is_some() {
+            let hex: String = value
+                .iter()
+                .take(16)
+                .map(|b| format!("{b:02x}"))
+                .collect::<Vec<_>>()
+                .join(" ");
+            eprintln!("PMD frame produced 0 samples ({}B): {}", value.len(), hex);
+        }
         return Ok(());
     }
     for s in samples {
@@ -578,6 +616,34 @@ mod tests {
         assert_eq!(samples[0].heart_rate_bpm, 72u16);
         assert_eq!(samples[0].kind, IntervalKind::Pp);
         assert_eq!(samples[0].intervals_ms, vec![850u16]);
+    }
+
+    #[test]
+    fn handle_pmd_data_does_nothing_before_protocol_announced() {
+        // Race window: PMD data notifications can in principle arrive between
+        // `subscribe(data).await` and the CP success indication that calls
+        // `on_protocol`. Until protocol is announced, downstream LSL outlets
+        // don't exist yet — emitting samples here would force lib.rs to either
+        // panic on the missing outlet or buffer for an unbounded window. Drop
+        // the early frames; the band keeps emitting at >1Hz so we don't lose
+        // anything meaningful.
+        let mode = Mode::PolarPpi {
+            protocol_announced: false,
+        };
+        let mut samples: Vec<Sample> = Vec::new();
+        let mut on_sample = |s: Sample| {
+            samples.push(s);
+            Ok(())
+        };
+        let mut frame = vec![0x03];
+        frame.extend_from_slice(&[0u8; 8]);
+        frame.push(0);
+        frame.extend_from_slice(&[72, 0x52, 0x03, 0x0A, 0x00, 0x02]);
+        handle_pmd_data(&frame, &mode, &mut on_sample).unwrap();
+        assert!(
+            samples.is_empty(),
+            "should drop PMD data before protocol announce"
+        );
     }
 
     #[test]

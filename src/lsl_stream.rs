@@ -47,7 +47,7 @@ impl LslStreamManager {
             )
             .map_err(|e| anyhow::anyhow!("Failed to create {tag} outlet: {e}"))?;
 
-            println!("✓ LSL outlets created (HR + {tag})");
+            println!("[ok] LSL outlets created (HR + {tag})");
 
             Ok(LslStreamManager {
                 hr_outlet,

@@ -31,7 +31,12 @@ pub struct BleDeviceManager {
 }
 
 impl BleDeviceManager {
-    /// Create a new BleDeviceManager from the first available adapter
+    /// Create a new BleDeviceManager from the first available adapter.
+    ///
+    /// On hosts with multiple BLE radios (e.g. built-in plus USB dongle),
+    /// whichever adapter the platform layer enumerates first is used; a
+    /// warning is logged so the user knows they may need to disable the
+    /// unwanted radio at the OS level.
     pub async fn new() -> Result<Self> {
         let manager = Manager::new()
             .await
@@ -42,10 +47,17 @@ impl BleDeviceManager {
             .await
             .context("Failed to get BLE adapters")?;
 
+        let count = adapters.len();
         let adapter = adapters
             .into_iter()
             .next()
             .context("No BLE adapters found")?;
+
+        if count > 1 {
+            eprintln!(
+                "Warning: {count} BLE adapters available; using the first. Disable unwanted radios at the OS level if this picks the wrong one."
+            );
+        }
 
         Ok(BleDeviceManager { adapter })
     }
@@ -73,16 +85,23 @@ impl BleDeviceManager {
         Ok(peripherals)
     }
 
-    /// Filter devices to exclude those without names or with "-" in name
+    /// Filter devices to exclude those without names or with "-" in name.
+    ///
+    /// The `-` filter is inherited from the Python and Android refs (see
+    /// `RRStreamer/CLAUDE.md`); it drops devices like `Govee_H6056_-714B`
+    /// whose advertising names contain hyphens, on the assumption these are
+    /// background MAC-suffix-style noise rather than HR bands. **Caveat:**
+    /// some Polar firmwares emit hyphenated suffixes (e.g.
+    /// `Polar H10 ABCD-1234`); if you're missing a known band, this filter
+    /// is the first place to look.
     pub async fn filter_devices(&self, devices: Vec<Peripheral>) -> Result<Vec<Peripheral>> {
         let mut filtered = Vec::new();
 
         for device in devices {
             if let Ok(Some(properties)) = device.properties().await {
                 if let Some(local_name) = properties.local_name {
-                    // Exclude devices with "-" in name
                     if !local_name.contains('-') && !local_name.is_empty() {
-                        println!("  ✓ {}", local_name);
+                        println!("  [ok] {}", local_name);
                         filtered.push(device);
                     }
                 }

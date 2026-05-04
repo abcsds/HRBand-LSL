@@ -91,22 +91,27 @@ impl CpResponse {
         self.error_code == 0
     }
 
-    /// Human-readable error name for logging. Falls back to `ERR_<code>` for
-    /// codes not in the table.
-    pub fn error_name(&self) -> String {
-        match self.error_code {
-            0 => "SUCCESS".to_string(),
-            1 => "INVALID_OP_CODE".to_string(),
-            2 => "INVALID_MEASUREMENT_TYPE".to_string(),
-            3 => "NOT_SUPPORTED".to_string(),
-            4 => "INVALID_LENGTH".to_string(),
-            5 => "INVALID_PARAMETER".to_string(),
-            6 => "ALREADY_IN_STATE".to_string(),
-            7 => "INVALID_RESOLUTION".to_string(),
-            8 => "INVALID_SAMPLE_RATE".to_string(),
-            9 => "INVALID_RANGE".to_string(),
-            10 => "INVALID_MTU".to_string(),
-            n => format!("ERR_{n}"),
+    /// Human-readable error name for logging. Returns a `Cow` so the common
+    /// case (known error code) is allocation-free; only unknown codes
+    /// allocate to format `ERR_<code>`.
+    pub fn error_name(&self) -> std::borrow::Cow<'static, str> {
+        let known: Option<&'static str> = match self.error_code {
+            0 => Some("SUCCESS"),
+            1 => Some("INVALID_OP_CODE"),
+            2 => Some("INVALID_MEASUREMENT_TYPE"),
+            3 => Some("NOT_SUPPORTED"),
+            4 => Some("INVALID_LENGTH"),
+            5 => Some("INVALID_PARAMETER"),
+            6 => Some("ALREADY_IN_STATE"),
+            7 => Some("INVALID_RESOLUTION"),
+            8 => Some("INVALID_SAMPLE_RATE"),
+            9 => Some("INVALID_RANGE"),
+            10 => Some("INVALID_MTU"),
+            _ => None,
+        };
+        match known {
+            Some(s) => std::borrow::Cow::Borrowed(s),
+            None => std::borrow::Cow::Owned(format!("ERR_{}", self.error_code)),
         }
     }
 }

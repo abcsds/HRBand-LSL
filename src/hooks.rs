@@ -33,13 +33,20 @@ pub struct HookContext {
     pub device_address: Option<String>,
     /// Optional current heart rate value
     pub heart_rate: Option<u8>,
-    /// R-R interval values in **milliseconds**, populated only when streaming
-    /// from an ECG-style band via the standard 0x2A37 RR-bit payload.
+    /// R-R interval values in **milliseconds**, from an ECG-style band via
+    /// the standard 0x2A37 RR-bit payload.
+    ///
+    /// **Per-event semantics:** at most one of `rr_intervals` /
+    /// `pp_intervals` is populated per `DataReceived` event — the kind is
+    /// determined by [`Self::interval_kind`]. The other vector is empty.
+    /// Both vectors will also be empty for a non-DataReceived hook point.
     pub rr_intervals: Vec<u16>,
-    /// Peak-to-peak interval values in **milliseconds**, populated only when
-    /// streaming from a PPG-style band via Polar PMD/PPI. PP is an
-    /// approximation of RR, not the same physiological measurement —
-    /// hooks that care about HRV should branch on `interval_kind`.
+    /// Peak-to-peak interval values in **milliseconds**, from a PPG-style
+    /// band via Polar PMD/PPI. PP is an approximation of RR, not the same
+    /// physiological measurement — hooks that care about HRV should branch
+    /// on [`Self::interval_kind`].
+    ///
+    /// See `rr_intervals` doc for per-event semantics.
     pub pp_intervals: Vec<u16>,
     /// Which interval characteristic the active connection produced. `None`
     /// before the first frame; `Some(Rr)` or `Some(Pp)` once protocol

@@ -92,5 +92,10 @@ impl Drop for LslOutlet {
     }
 }
 
+// liblsl's per-outlet `lsl_push_sample_*` C entrypoints are documented as
+// thread-safe (see liblsl C API docs and matching Java/JNA bindings used by
+// the Android sibling). The two pointers we hold (`outlet`, `info`) are
+// effectively final after `LslOutlet::new`. Do NOT add mutable state to
+// `LslOutlet` without synchronising it.
 unsafe impl Send for LslOutlet {}
 unsafe impl Sync for LslOutlet {}

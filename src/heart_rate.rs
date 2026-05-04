@@ -45,6 +45,10 @@ pub struct Sample {
     pub kind: IntervalKind,
     /// Always milliseconds. Empty if the band reports HR but no interval (e.g.
     /// HR-only band, or Polar H10 just after reconnect before the first RR).
+    ///
+    /// `u16` width is sound for both kinds: PMD/PPI samples are u16 LE on
+    /// the wire; RR raw u16 (1/1024-s units) max → 63999 ms via `raw_to_ms`,
+    /// well within u16 range. No precision loss at the parse boundary.
     pub intervals_ms: Vec<u16>,
 }
 
