@@ -1,12 +1,12 @@
 [package]
 name = "hrband-lsl"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Rust implementation of HRBand-LSL: BLE heart rate monitoring with Lab Streaming Layer integration"
 license = "MIT"
 repository = "https://github.com/example/HRBand-LSL"
 keywords = ["ble", "heart-rate", "lsl", "real-time", "streaming"]
-authors = ["Claude Code"]
+authors = ["Alberto Barradas", "Claude Code"]
 readme = "README.rust.md"
 
 [dependencies]
