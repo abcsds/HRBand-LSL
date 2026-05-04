@@ -1,3 +1,4 @@
+use crate::heart_rate::IntervalKind;
 use std::collections::HashMap;
 use std::sync::Arc;
 
@@ -32,8 +33,18 @@ pub struct HookContext {
     pub device_address: Option<String>,
     /// Optional current heart rate value
     pub heart_rate: Option<u8>,
-    /// RR interval values (in milliseconds)
+    /// R-R interval values in **milliseconds**, populated only when streaming
+    /// from an ECG-style band via the standard 0x2A37 RR-bit payload.
     pub rr_intervals: Vec<u16>,
+    /// Peak-to-peak interval values in **milliseconds**, populated only when
+    /// streaming from a PPG-style band via Polar PMD/PPI. PP is an
+    /// approximation of RR, not the same physiological measurement —
+    /// hooks that care about HRV should branch on `interval_kind`.
+    pub pp_intervals: Vec<u16>,
+    /// Which interval characteristic the active connection produced. `None`
+    /// before the first frame; `Some(Rr)` or `Some(Pp)` once protocol
+    /// selection commits.
+    pub interval_kind: Option<IntervalKind>,
     /// Additional metadata as key-value pairs
     pub metadata: HashMap<String, String>,
 }
@@ -52,7 +63,12 @@ pub trait Hook: Send + Sync {
     fn execute(&self, point: HookPoint, context: &HookContext) -> anyhow::Result<()>;
 }
 
-/// HookRegistry manages registration and execution of multiple hooks
+/// HookRegistry manages registration and execution of multiple hooks.
+///
+/// Cloning is cheap — each hook is held behind an [`Arc`] — so the registry can
+/// be shared into async closures by cloning it without copying the hook trait
+/// objects themselves.
+#[derive(Clone)]
 pub struct HookRegistry {
     hooks: Vec<Arc<dyn Hook>>,
 }
@@ -114,6 +130,8 @@ mod tests {
         assert!(context.device_address.is_none());
         assert!(context.heart_rate.is_none());
         assert!(context.rr_intervals.is_empty());
+        assert!(context.pp_intervals.is_empty());
+        assert!(context.interval_kind.is_none());
         assert!(context.metadata.is_empty());
     }
 }

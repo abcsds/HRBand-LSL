@@ -1,3 +1,4 @@
+use hrband_lsl::heart_rate::IntervalKind;
 use hrband_lsl::hooks::{Hook, HookContext, HookPoint, HookRegistry};
 use std::sync::Arc;
 
@@ -122,28 +123,45 @@ fn test_hook_context_default() {
     assert!(context.device_address.is_none());
     assert!(context.heart_rate.is_none());
     assert!(context.rr_intervals.is_empty());
+    assert!(context.pp_intervals.is_empty());
+    assert!(context.interval_kind.is_none());
     assert!(context.metadata.is_empty());
 }
 
 #[test]
-fn test_hook_context_with_data() {
+fn test_hook_context_with_rr_data() {
     let mut context = HookContext::default();
-    context.device_name = Some("Heart Rate Monitor".to_string());
+    context.device_name = Some("Polar H10".to_string());
     context.device_address = Some("AA:BB:CC:DD:EE:FF".to_string());
     context.heart_rate = Some(75);
     context.rr_intervals = vec![800, 810, 805];
+    context.interval_kind = Some(IntervalKind::Rr);
     context
         .metadata
         .insert("firmware".to_string(), "v1.0".to_string());
 
-    assert_eq!(context.device_name, Some("Heart Rate Monitor".to_string()));
-    assert_eq!(
-        context.device_address,
-        Some("AA:BB:CC:DD:EE:FF".to_string())
-    );
+    assert_eq!(context.device_name, Some("Polar H10".to_string()));
     assert_eq!(context.heart_rate, Some(75));
-    assert_eq!(context.rr_intervals.len(), 3);
+    assert_eq!(context.rr_intervals, vec![800, 810, 805]);
+    assert!(context.pp_intervals.is_empty());
+    assert_eq!(context.interval_kind, Some(IntervalKind::Rr));
     assert_eq!(context.metadata.get("firmware"), Some(&"v1.0".to_string()));
+}
+
+#[test]
+fn test_hook_context_with_pp_data() {
+    // PPG-derived bands (Polar Sense, OH1, OH1+) populate pp_intervals only.
+    // Keeping RR and PP as separate fields makes the physiological provenance
+    // explicit — PP is an approximation, not the same measurement as RR.
+    let mut context = HookContext::default();
+    context.device_name = Some("Polar Sense".to_string());
+    context.heart_rate = Some(72);
+    context.pp_intervals = vec![820, 830];
+    context.interval_kind = Some(IntervalKind::Pp);
+
+    assert!(context.rr_intervals.is_empty());
+    assert_eq!(context.pp_intervals, vec![820, 830]);
+    assert_eq!(context.interval_kind, Some(IntervalKind::Pp));
 }
 
 #[test]

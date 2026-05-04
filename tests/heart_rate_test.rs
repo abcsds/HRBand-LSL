@@ -38,21 +38,17 @@ fn test_parse_hr_uint16_format() {
 #[test]
 fn test_parse_with_rr_intervals() {
     // flags: 0x10 = 0001_0000
-    // Bit 0: 0 = uint8 format
-    // Bits 1-2: 00 = not supported
-    // Bit 3: 0 = no energy expended
     // Bit 4: 1 = RR intervals present
     // HR: 72 (uint8)
-    // RR intervals: two values (1000ms and 1200ms as uint16 LE)
-    // 1000 = 0x03E8 LE = [0xE8, 0x03]
-    // 1200 = 0x04B0 LE = [0xB0, 0x04]
+    // RR intervals are wire-encoded in 1/1024-s units; the parser converts to ms.
+    // raw 1000 → 977 ms; raw 1200 → 1172 ms.
     let data = vec![0x10, 72, 0xE8, 0x03, 0xB0, 0x04];
     let result = parse_heart_rate_measurement(&data).unwrap();
 
     assert_eq!(result.heart_rate, 72);
     assert_eq!(result.sensor_contact, None);
     assert_eq!(result.energy_expended, None);
-    assert_eq!(result.rr_intervals, vec![1000, 1200]);
+    assert_eq!(result.rr_intervals, vec![977, 1172]);
 }
 
 #[test]
@@ -98,14 +94,14 @@ fn test_parse_all_fields_present() {
     // Bit 4: 1 = RR intervals present
     // HR: 120 (uint16 LE at indices 1-2)
     // Energy expended: 500 (uint16 LE at indices 3-4) = [244, 1]
-    // RR intervals: one value (950ms = 0x03B6) = [182, 3] in LE
+    // RR interval: raw 950 (1/1024 s units) → 928 ms after the parser conversion.
     let data = vec![0x1F, 120, 0, 244, 1, 182, 3];
     let result = parse_heart_rate_measurement(&data).unwrap();
 
     assert_eq!(result.heart_rate, 120);
     assert_eq!(result.sensor_contact, Some(true));
     assert_eq!(result.energy_expended, Some(500));
-    assert_eq!(result.rr_intervals, vec![950]);
+    assert_eq!(result.rr_intervals, vec![928]);
 }
 
 #[test]

@@ -1,6 +1,6 @@
 // Direct FFI bindings to liblsl.so
-use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_double, c_float, c_int, c_void};
+use std::ffi::CString;
+use std::os::raw::{c_char, c_double, c_int};
 
 #[repr(C)]
 pub struct lsl_streaminfo {
@@ -50,9 +50,9 @@ impl LslOutlet {
             let info = lsl_create_streaminfo(
                 name_c.as_ptr(),
                 type_c.as_ptr(),
-                1,     // channel_count
-                0.0,   // irregular rate
-                4,     // cft_int32 (not 2, which is cft_double64!)
+                1,   // channel_count
+                0.0, // irregular rate
+                4,   // cft_int32 (not 2, which is cft_double64!)
                 source_c.as_ptr(),
             );
 
