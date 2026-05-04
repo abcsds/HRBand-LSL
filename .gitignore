@@ -1,11 +1,10 @@
 # Rust
 /target/
-Cargo.lock
 result
 *.rlib
 *.rmeta
 
-# Python (for reference, but removed from this branch)
+# Python (residual from the historical Python branch)
 .venv/
 __pycache__/
 *.pyc
@@ -15,3 +14,6 @@ __pycache__/
 .vscode/
 *.swp
 *.swo
+
+# Tooling state (Claude Code session artifacts)
+.claude/

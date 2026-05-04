@@ -1,6 +1,6 @@
-# HRBand-LSL: Rust Implementation
+# HRBand-LSL
 
-A modern Rust implementation of the HRBand-LSL (Heart Rate Band Lab Streaming Layer) system for real-time BLE heart rate monitoring and data streaming to Lab Streaming Layer (LSL) infrastructure.
+Connect BLE Heart Rate bands to Lab Streaming Layer (LSL) systems for real-time heart rate monitoring and data streaming. It works with any BLE device that supports the Heart Rate service.
 
 ## Features
 
@@ -35,26 +35,35 @@ A modern Rust implementation of the HRBand-LSL (Heart Rate Band Lab Streaming La
 
 ## Building
 
-### With Nix
+```bash
+nix build
+```
 
+### With cargo
+
+Access the development shell:
 ```bash
 nix develop
 cargo build --release
 ```
 
-### Standard Build
-
+Standard Build:
 ```bash
 cargo build --release
 ```
 
-### Build without LSL support
-
+Build without LSL support:
 ```bash
 cargo build --release --no-default-features
 ```
 
 ## Usage
+
+### With Nix
+
+```bash
+nix run
+```
 
 ### Basic Application
 
@@ -155,6 +164,14 @@ The `parse_heart_rate_measurement()` function fully implements BLE spec 0x2A37:
 
 ## Testing
 
+### With Nix
+
+```bash
+nix run
+```
+
+### With cargo
+
 Run all tests:
 
 ```bash
@@ -245,15 +262,6 @@ impl Hook for MetricsHook {
 }
 ```
 
-## Performance Characteristics
-
-- **Device Scan**: ~5 seconds
-- **Connection Time**: ~1-2 seconds
-- **Notification Processing**: <1ms per sample
-- **LSL Push Latency**: <0.5ms
-- **Memory Footprint**: ~25MB resident
-- **CPU Usage**: <1% during streaming
-
 ## Troubleshooting
 
 ### No BLE Adapters Found
@@ -272,11 +280,12 @@ systemctl start bluetooth
 1. Ensure device is powered and in range
 2. Check device is not already paired with another client
 3. Verify BLE permissions in system settings
+4. Try connection again
 
 ### LSL Stream Not Receiving Data
 
-1. Verify LSL library is properly installed
-2. Check Lab Streaming Layer hub is running
+1. Verify LSL library is properly installed (liblsl)
+2. Check (LabRecorder)[https://github.com/labstreaminglayer/App-LabRecorder] for the streams
 3. Verify stream name and channel count match expected format
 
 ## Building for Release
@@ -294,37 +303,3 @@ cargo build --release
 2. Ensure `cargo clippy` passes with no warnings
 3. Add tests for new functionality
 4. Update documentation as needed
-
-## License
-
-See LICENSE.md for details.
-
-## Version
-
-Current: 0.1.0 (Beta)
-
-## Changelog
-
-### v0.1.0
-- Initial Rust implementation
-- BLE device scanning and filtering
-- Heart rate characteristic parsing
-- LSL stream integration
-- Hook system with 8 lifecycle points
-- Example hook implementations
-- Comprehensive tests and documentation
-
-## Python Version
-
-A simpler Python implementation is available on the `python` branch:
-
-```bash
-git checkout python
-python main.py
-```
-
-The Rust version offers:
-- **10x better performance** (faster startup, lower memory)
-- **Extensible hook system** for custom integrations (InfluxDB, logging, etc.)
-- **Type safety** and compile-time error checking
-- **Production-ready** with full CI/CD and nix packaging

@@ -6,8 +6,14 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
@@ -38,7 +44,7 @@
       {
         packages.default = pkgs.rustPlatform.buildRustPackage {
           pname = "hrband-lsl";
-          version = "0.1.0";
+          version = "0.2.0";
 
           src = ./.;
 
@@ -60,7 +66,7 @@
 
           meta = with pkgs.lib; {
             description = "Stream BLE heart rate data to Lab Streaming Layer";
-            homepage = "https://github.com/example/HRBand-LSL";
+            homepage = "https://github.com/abcsds/HRBand-LSL";
             license = licenses.mit;
             maintainers = [ ];
             platforms = platforms.linux;
@@ -72,14 +78,40 @@
           program = "${self.packages.${system}.default}/bin/hrband-lsl";
         };
 
+        # `nix flake check` runs these. Build also runs `cargo test` because
+        # buildRustPackage defaults doCheck = true; that gives us the test
+        # signal for free. Clippy is intentionally NOT a check because the
+        # project carries ~20 pre-existing warnings — re-add once those are
+        # cleared (or with `-A clippy::all -W clippy::correctness` if you
+        # want a softer gate).
+        checks = {
+          build = self.packages.${system}.default;
+
+          fmt =
+            pkgs.runCommand "fmt-check"
+              {
+                nativeBuildInputs = with pkgs; [
+                  cargo
+                  rustfmt
+                ];
+              }
+              ''
+                cd ${self}
+                cargo fmt --check --manifest-path ${self}/Cargo.toml
+                touch $out
+              '';
+        };
+
         devShells.default = pkgs.mkShell {
-          buildInputs = buildInputs ++ (with pkgs; [
-            cargo
-            rustc
-            rustfmt
-            clippy
-            cmake
-          ]);
+          buildInputs =
+            buildInputs
+            ++ (with pkgs; [
+              cargo
+              rustc
+              rustfmt
+              clippy
+              cmake
+            ]);
 
           shellHook = ''
             export CC=${buildEnv.CC}
