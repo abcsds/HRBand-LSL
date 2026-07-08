@@ -22,9 +22,9 @@ A modern Rust implementation of the HRBand-LSL (Heart Rate Band Lab Streaming La
 
 - **Rust 1.70+** (Edition 2021)
 - **Tokio 1.35+** for async runtime
-- **btleplug 0.11+** for BLE operations
+- **btleplug 0.12+** for BLE operations
 - **lsl 0.1+** for Lab Streaming Layer (optional feature)
-- **inquire 0.7+** for interactive prompts
+- **inquire 0.9+** for interactive prompts
 - **Optional**: libdbus development libraries for Linux BLE support
 
 ### System Requirements
