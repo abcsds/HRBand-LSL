@@ -1,7 +1,51 @@
 # BLE mock testing for `HeartRateClient` + CI
 
 **Date:** 2026-07-10
-**Status:** Approved
+**Status:** Superseded — see Resolution below
+
+## Resolution (2026-07-10)
+
+After reviewing this design against its actual purpose (HRBand-LSL is personal
+research infra, not a product with ongoing external contributions), the
+`FakePeripheral`/generic-trait/CI design below was **not implemented**. Two
+things drove the reversal:
+
+1. **It didn't answer the question that motivated it.** The design was
+   proposed in response to a real scare (btleplug 0.11→0.12: a manual test
+   run failed with "Service discovery timed out" before a retry succeeded).
+   But `FakePeripheral` tests *our* protocol/state-machine logic against a
+   scripted fake — it never exercises btleplug's real BlueZ/dbus
+   implementation, so it cannot catch a library-version regression in actual
+   BLE behavior. Nothing that runs in CI can: GitHub-hosted runners have no
+   Bluetooth radio. The only thing that ever answers "did the library update
+   break real BLE" is running the real binary against real hardware — which
+   is what already happened, manually, on 2026-07-08.
+2. **The maintenance cadence doesn't need it.** Dependencies will be updated
+   on a semesterly cadence, each update tagged, with a manual hardware smoke
+   test (build + `cargo test` + run against a real band) before tagging —
+   same process already exercised for the 2026-07-08 update. That's
+   infrequent enough that the ~150+ lines of generic-trait/mock/CI machinery
+   below isn't worth the ongoing maintenance for a single-user tool.
+
+**What was actually done instead** (see the companion commit): removed the
+misleading empty stub tests in `tests/ble_test.rs` (they asserted nothing
+about BLE behavior despite the name), and added `proptest`-based
+panic-safety tests for the two BLE frame parsers
+(`parse_heart_rate_measurement`, `parse_ppi_frame`/`parse_cp_response`).
+Those parsers already looked bounds-checked on inspection, so this isn't a
+bug fix — it's cheap insurance (one dev-dependency, ~20 lines) against a
+future edit accidentally introducing a panic that could crash a live
+recording session on a single corrupted BLE frame. That failure mode is
+real and CI-testable without any hardware or mocking; a version-compat
+regression in btleplug is not.
+
+The design below is kept for the record — the reasoning behind the
+generic-`Peripheral`-trait approach and the CI workflow shape may be useful
+if this project ever grows external contributors or a CI need re-emerges.
+
+---
+
+## Original design (not implemented)
 
 ## Problem
 

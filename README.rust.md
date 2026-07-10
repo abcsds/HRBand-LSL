@@ -176,11 +176,26 @@ cargo test --no-default-features
 
 ### Test Coverage
 
-- **heart_rate.rs**: 8 tests covering all BLE spec formats
+- **heart_rate.rs**: BLE spec 0x2A37 parsing, plus a `proptest` property test
+  asserting the parser never panics on arbitrary input
+- **polar_pmd.rs**: PMD/PPI frame and control-point parsing, plus a
+  `proptest` property test for panic-safety on arbitrary input
+- **client.rs**: protocol-decision state machine (standard RR vs. Polar PPI
+  fallback) and PMD control-point response handling
 - **ble.rs**: UUID constant verification
 - **hooks.rs**: 8 tests for hook registry and execution
 - **lsl_stream.rs**: Feature-gated stream creation tests
 - **Integration tests**: Full application compilation
+
+### BLE Hardware Verification
+
+Actual BLE connectivity (scan, connect, service discovery, notifications)
+isn't covered by automated tests — there's no Bluetooth radio in CI, and a
+mocked BLE stack wouldn't catch a real library regression anyway. Dependency
+updates happen on a semesterly cadence, tagged, with a manual smoke test
+(build + `cargo test` + run against a real band) before tagging. See
+`docs/superpowers/specs/2026-07-10-ble-mock-testing-design.md` for the
+reasoning behind skipping BLE mocking/CI.
 
 ## Code Quality
 

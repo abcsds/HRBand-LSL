@@ -288,4 +288,14 @@ mod tests {
         assert_eq!(s.kind, IntervalKind::Pp);
         assert_eq!(s.intervals_ms, vec![800, 820]);
     }
+
+    proptest::proptest! {
+        // A real band on a flaky link can send truncated or garbled 0x2A37
+        // frames. The parser must reject them with an error, never panic —
+        // a panic here would crash a live recording session.
+        #[test]
+        fn parse_heart_rate_measurement_never_panics(data: Vec<u8>) {
+            let _ = parse_heart_rate_measurement(&data);
+        }
+    }
 }

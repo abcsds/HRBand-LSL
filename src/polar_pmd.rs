@@ -305,4 +305,18 @@ mod tests {
     fn stop_ppi_request_bytes() {
         assert_eq!(STOP_PPI_REQUEST, [0x03, 0x03]);
     }
+
+    proptest::proptest! {
+        // Same rationale as heart_rate.rs's panic-safety test: a corrupted
+        // PMD data or control-point frame must be rejected, never panic.
+        #[test]
+        fn parse_ppi_frame_never_panics(data: Vec<u8>) {
+            let _ = parse_ppi_frame(&data);
+        }
+
+        #[test]
+        fn parse_cp_response_never_panics(data: Vec<u8>) {
+            let _ = parse_cp_response(&data);
+        }
+    }
 }
